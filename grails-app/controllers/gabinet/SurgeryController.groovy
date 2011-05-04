@@ -1,7 +1,10 @@
 package gabinet
 
-class SurgeryController {
+import org.apache.commons.logging.LogFactory
 
+class SurgeryController {
+	private static final log = LogFactory.getLog(this)
+	
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index = {
@@ -14,13 +17,16 @@ class SurgeryController {
     }
 
     def create = {
-        def surgeryInstance = new Surgery()
-        surgeryInstance.properties = params
-        return [surgeryInstance: surgeryInstance]
+		def clientInstance = Client.get(params.id)
+        return [clientInstance : clientInstance]
     }
 
     def save = {
+		def clientInstance = Client.get(params.id)
+		log.error clientInstance
         def surgeryInstance = new Surgery(params)
+		log.error surgeryInstance
+		clientInstance.addToSurgeies(surgeryInstance)
         if (surgeryInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'surgery.label', default: 'Surgery'), surgeryInstance.id])}"
             redirect(action: "show", id: surgeryInstance.id)

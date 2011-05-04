@@ -12,6 +12,7 @@
             <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
             <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
             <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
+            <span class="menuButton"><g:link class="create" action="create" controller="surgery" params="[id:clientInstance.id]">New Surgery For Client</g:link></span>
         </div>
         <div class="body">
             <h1><g:message code="default.show.label" args="[entityName]" /></h1>
@@ -105,7 +106,7 @@
                             <td valign="top" style="text-align: left;" class="value">
                                 <ul>
                                 <g:each in="${clientInstance.surgeies}" var="s">
-                                    <li><g:link controller="surgery" action="show" id="${s.id}">${s?.encodeAsHTML()}</g:link></li>
+                                    <li><g:link controller="surgery" action="show" id="${s.id}">${s.surgery}, ${s?.encodeAsHTML()}</g:link></li>
                                 </g:each>
                                 </ul>
                             </td>
