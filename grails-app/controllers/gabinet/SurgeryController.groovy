@@ -1,7 +1,10 @@
 package gabinet
 
+import grails.plugins.springsecurity.Secured
+
 import org.apache.commons.logging.LogFactory
 
+@Secured(['IS_AUTHENTICATED_FULLY'])
 class SurgeryController {
 	private static final log = LogFactory.getLog(this)
 	
