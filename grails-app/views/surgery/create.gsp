@@ -7,6 +7,15 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'surgery.label', default: 'Surgery')}" />
         <title><g:message code="default.create.label" args="[entityName]" /></title>
+        <link rel="stylesheet" href="${resource(dir:'css/south-street',file:'jquery-ui-1.8.10.custom.css')}" />
+        
+        <g:javascript library="jquery" plugin="jquery" src="jquery/jquery-1.4.4.min.js"/>
+        <script src="${resource(dir:'js/jquery',file:'jquery-ui-1.8.9.custom.min.js')}" type="text/javascript"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("#surgeryDate").datepicker({dateFormat: 'yy/mm/dd', firstDay: 1});
+			})
+		</script>
     </head>
     <body>
         <div class="nav">
@@ -36,6 +45,7 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: surgeryInstance, field: 'date', 'errors')}">
                                     <g:datePicker name="date" precision="day" value="${surgeryInstance?.date}"  />
+									<g:textField id="surgeryDate" name="startDate" value="${surgeryInstance?.date}" />
                                 </td>
                             </tr>
                         

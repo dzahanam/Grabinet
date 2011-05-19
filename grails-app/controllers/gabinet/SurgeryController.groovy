@@ -22,6 +22,7 @@ class SurgeryController {
     }
 
     def save = {
+		def testDatePicker = {}
 		def clientInstance = Client.get(params.id)
 		log.error clientInstance
         def surgeryInstance = new Surgery(params)
