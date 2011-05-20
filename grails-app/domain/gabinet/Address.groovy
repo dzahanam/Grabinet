@@ -5,6 +5,10 @@ class Address {
 	String street
 	String city
 	
+	static searchable = true
+	
     static constraints = {
+		city(blank:false)
+		street(blank:false)
     }
 }

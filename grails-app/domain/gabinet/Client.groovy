@@ -6,6 +6,7 @@ class Client {
 	String homePhone
 	String workPhone
 	String cellPhone
+	String email
 	Date birthDate
 	
 	String allergy
@@ -17,6 +18,10 @@ class Client {
 	
 	static hasMany = [ surgeies : Surgery ]
 	
+	static searchable = true
+	
     static constraints = {
+		firstName(blank:false)
+		surName(blank:false)
     }
 }

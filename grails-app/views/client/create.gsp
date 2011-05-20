@@ -117,6 +117,15 @@
                                     <g:textField name="homePhone" value="${clientInstance?.homePhone}" />
                                 </td>
                             </tr>
+                            
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="email"><g:message code="client.email.label" default="Email" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: clientInstance, field: 'email', 'errors')}">
+                                    <g:textField name="email" value="${clientInstance?.email}" />
+                                </td>
+                            </tr>
                         
                             <tr class="prop">
                                 <td valign="top" class="name">

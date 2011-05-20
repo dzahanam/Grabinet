@@ -99,4 +99,17 @@ class ClientController {
             redirect(action: "list")
         }
     }
+	
+	def searchableService //inject the service (make sure the name is correct)
+	 
+	def search = {
+	    def query = params.q
+	    if(query){
+	        def srchResults = searchableService.search(query)
+	        render(view: "list",
+	               model: [clientInstanceList: srchResults.results, clientInstanceTotal:srchResults.total])
+	    }else{
+	        redirect(action: "list")
+	    }
+	}
 }
