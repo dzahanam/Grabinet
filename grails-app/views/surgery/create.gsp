@@ -32,7 +32,7 @@
                 <g:renderErrors bean="${surgeryInstance}" as="list" />
             </div>
             </g:hasErrors>
-            <g:form action="save" >
+            <g:form action="save" enctype="multipart/form-data">
                 <div class="dialog">
                     <table>
                         <tbody>
@@ -73,6 +73,7 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: surgeryInstance, field: 'surgery', 'errors')}">
                                     <g:textField name="surgery" value="${surgeryInstance?.surgery}" />
+                            		
                                 </td>
                             </tr>
                         
@@ -84,7 +85,17 @@
                                     <g:textField name="therapy" value="${surgeryInstance?.therapy}" />
                                 </td>
                             </tr>
-                        
+                            
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="therapy"><g:message code="surgery.upload.label" default="Upload picture" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: surgeryInstance, field: 'picture', 'errors')}">
+                                    <input type="file" name="picture" />
+                                </td>
+                            </tr>
+                                        
+                                                   
                         </tbody>
                     </table>
                 </div>

@@ -323,3 +323,17 @@ a.header-main:link,a.header-main:visited {
 	margin-top: 1em;
 	clear: both;
 }
+
+img.pic {
+  width: 60.0em;
+  height: 60.0em;
+}
+img.pic_small {
+  width: 30em;
+  height: 30em;
+}
+
+img.pic_tiny {
+  width: 5em;
+  height: 5em;
+}

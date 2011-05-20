@@ -63,6 +63,13 @@
                             <td valign="top" class="value">${fieldValue(bean: surgeryInstance, field: "therapy")}</td>
                             
                         </tr>
+                        
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="surgery.picture.label" default="Picture" /></td>
+                            
+                            <td valign="top" class="value"><img class="pic_small" src="${createLink(controller:'surgery', action:'viewImage', id:surgeryInstance.id)}" /></td>
+                            
+                        </tr>
                     
                     </tbody>
                 </table>

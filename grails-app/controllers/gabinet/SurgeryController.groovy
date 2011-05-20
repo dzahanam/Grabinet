@@ -25,12 +25,23 @@ class SurgeryController {
     }
 
     def save = {
-		def testDatePicker = {}
+//		def testDatePicker = {}
 		def clientInstance = Client.get(params.id)
 		log.error clientInstance
         def surgeryInstance = new Surgery(params)
 		log.error surgeryInstance
 		clientInstance.addToSurgeies(surgeryInstance)
+		
+		def f = request.getFile('picture')
+	    // List of OK mime-types
+	    def okcontents = ['image/png', 'image/jpeg', 'image/gif']
+	    if (! okcontents.contains(f.getContentType())) {
+	      flash.message = "picture must be one of: ${okcontents}"
+	      render(view: "create", model: [surgeryInstance: surgeryInstance])
+	      return;
+	    }
+		log.info("File uploaded: " + f.getContentType())
+		
         if (surgeryInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'surgery.label', default: 'Surgery'), surgeryInstance.id])}"
             redirect(action: "show", id: surgeryInstance.id)
@@ -107,4 +118,12 @@ class SurgeryController {
             redirect(action: "list")
         }
     }
+	
+    def viewImage = {
+
+      def surgeryInstance = Surgery.get(params.id)
+      byte[] image = surgeryInstance.picture 
+      response.outputStream << image
+
+    } 
 }

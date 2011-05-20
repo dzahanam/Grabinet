@@ -33,7 +33,7 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="client.address.label" default="Address" /></td>
                             
-                            <td valign="top" class="value"><g:link controller="address" action="show" id="${clientInstance?.address?.id}">${clientInstance?.address?.encodeAsHTML()}</g:link></td>
+                            <td valign="top" class="value"><g:link controller="address" action="show" id="${clientInstance?.address?.id}">${clientInstance?.address?.city}, ${clientInstance?.address?.street}, ${clientInstance?.address?.postalCode}</g:link></td>
                             
                         </tr>
                     
