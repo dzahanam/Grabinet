@@ -1,3 +1,4 @@
+import gabinet.Address
 import gabinet.Client
 
 import org.gabinet.SecRole
@@ -9,11 +10,11 @@ class BootStrap {
 
     def init = { servletContext ->
 		// Check whether the test data already exists.
-//		if (!Client.count()) {
-//			def address = new Address(city: "Poznan", street : "ulica", postalCode : "61-100").save(failOnError: true)
-//			new Client(firstName: "Stephen King", surName: "The Shining", email: "example@org.pl", address: address).save(failOnError: true)
+		if (!Client.count()) {
+			def address = new Address(city: "Poznan", street : "ulica", postalCode : "61-100").save(failOnError: true)
+			new Client(firstName: "Stephen King", surName: "The Shining", email: "example@org.pl", allergy: "", birthDate: new Date(), cellPhone: "", comment: "", family: "", homePhone: "", recommendation: "", workPhone: "", address: address).save(failOnError: true)
 //			new Client(firstName: "Józef", surName: "Dobronocki", email: "j.dobro@gazeta.pl", recommendation: "recommendation1").save(failOnError: true)
-//		}
+		}
 		
     	/* bootstrap roles */
     	def userRole = SecRole.findByAuthority('ROLE_USER') ?: new SecRole(authority: 'ROLE_USER').save(failOnError: true)
