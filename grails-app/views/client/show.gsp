@@ -29,6 +29,20 @@
                             <td valign="top" class="value">${fieldValue(bean: clientInstance, field: "id")}</td>
                             
                         </tr>
+                        
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="client.firstName.label" default="First Name" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: clientInstance, field: "firstName")}</td>
+                            
+                        </tr>
+                        
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="client.surName.label" default="Sur Name" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: clientInstance, field: "surName")}</td>
+                            
+                        </tr>
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="client.address.label" default="Address" /></td>
@@ -47,7 +61,7 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="client.birthDate.label" default="Birth Date" /></td>
                             
-                            <td valign="top" class="value"><g:formatDate date="${clientInstance?.birthDate}" /></td>
+                            <td valign="top" class="value"><g:formatDate format="yyyy-MM-dd" date="${clientInstance?.birthDate}" /></td>
                             
                         </tr>
                     
@@ -55,6 +69,20 @@
                             <td valign="top" class="name"><g:message code="client.cellPhone.label" default="Cell Phone" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: clientInstance, field: "cellPhone")}</td>
+                            
+                        </tr>
+                                            
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="client.homePhone.label" default="Home Phone" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: clientInstance, field: "homePhone")}</td>
+                            
+                        </tr>
+                        
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="client.workPhone.label" default="Work Phone" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: clientInstance, field: "workPhone")}</td>
                             
                         </tr>
                     
@@ -73,30 +101,9 @@
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="client.firstName.label" default="First Name" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: clientInstance, field: "firstName")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="client.homePhone.label" default="Home Phone" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: clientInstance, field: "homePhone")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
                             <td valign="top" class="name"><g:message code="client.recommendation.label" default="Recommendation" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: clientInstance, field: "recommendation")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="client.surName.label" default="Sur Name" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: clientInstance, field: "surName")}</td>
                             
                         </tr>
                     
@@ -106,17 +113,11 @@
                             <td valign="top" style="text-align: left;" class="value">
                                 <ul>
                                 <g:each in="${clientInstance.surgeies}" var="s">
-                                    <li><g:link controller="surgery" action="show" id="${s.id}">${s.surgery}, ${s?.encodeAsHTML()}</g:link></li>
+                                //data bez godziny
+                                    <li><g:link controller="surgery" action="show" id="${s.id}"><g:formatDate format="yyyy-MM-dd" date="${s.date}"/>,${s.surgery}, ${s?.encodeAsHTML()}</g:link></li>
                                 </g:each>
                                 </ul>
                             </td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="client.workPhone.label" default="Work Phone" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: clientInstance, field: "workPhone")}</td>
                             
                         </tr>
                     

@@ -31,7 +31,7 @@
                         
                             <g:sortableColumn property="id" title="${message(code: 'client.id.label', default: 'Id')}" />
                             
-                            <g:sortableColumn property="firstName" title="${message(code: 'client.firstName.label', default: 'First Name')}" />
+                            <g:sortableColumn property="firstName" title="${message(code: 'client.firstName.label', default: 'Name')}" />
                         
                             <th><g:message code="client.address.label" default="Address" /></th>
                         
@@ -39,9 +39,13 @@
                         
                             <g:sortableColumn property="birthDate" title="${message(code: 'client.birthDate.label', default: 'Birth Date')}" />
                         
-                            <g:sortableColumn property="cellPhone" title="${message(code: 'client.cellPhone.label', default: 'Cell Phone')}" />
+                            <g:sortableColumn property="cellPhone" title="${message(code: 'client.cellPhone.label', default: 'Phones')}" />
                         
                             <g:sortableColumn property="comment" title="${message(code: 'client.comment.label', default: 'Comment')}" />
+                            
+                            <g:sortableColumn property="email" title="${message(code: 'client.email.label', default: 'email')}" />
+                            
+                            <g:sortableColumn property="recommendation" title="${message(code: 'client.recommendation.label', default: 'recommendation')}" />
                         
                         </tr>
                     </thead>
@@ -51,18 +55,22 @@
                         
                             <td><g:link action="show" id="${clientInstance.id}">${fieldValue(bean: clientInstance, field: "id")}</g:link></td>
                             
-                            <td><g:link action="show" id="${clientInstance.id}">${fieldValue(bean: clientInstance, field: "firstName")}</g:link></td>
+                            <td><g:link action="show" id="${clientInstance.id}">${fieldValue(bean: clientInstance, field: "firstName")} ${fieldValue(bean: clientInstance, field: "surName")}</g:link></td>
                         
                             <td>${fieldValue(bean: clientInstance, field: "address.city")}, ${fieldValue(bean: clientInstance, field: "address.postalCode")}, ${fieldValue(bean: clientInstance, field: "address.street")}</td>
                         
                             <td>${fieldValue(bean: clientInstance, field: "allergy")}</td>
                         
-                            <td><g:formatDate date="${clientInstance.birthDate}" /></td>
+                            <td><g:formatDate format="yyyy-MM-dd" date="${clientInstance.birthDate}" /></td>
                         
-                            <td>${fieldValue(bean: clientInstance, field: "cellPhone")}</td>
+                            <td>${fieldValue(bean: clientInstance, field: "cellPhone")}, ${fieldValue(bean: clientInstance, field: "homePhone")}, ${fieldValue(bean: clientInstance, field: "workPhone")}</td>
                         
                             <td>${fieldValue(bean: clientInstance, field: "comment")}</td>
-                        
+                            
+                            <td>${fieldValue(bean: clientInstance, field: "email")}</td>
+                            
+                            <td>${fieldValue(bean: clientInstance, field: "recommendation")}</td>
+                                                    
                         </tr>
                     </g:each>
                     </tbody>

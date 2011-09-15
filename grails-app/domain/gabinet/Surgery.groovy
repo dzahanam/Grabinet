@@ -21,7 +21,7 @@ class Surgery {
 	byte[] picture
 	
     static constraints = {
-		picture(nullable:true, maxSize: 524288 /* 512K */)
+		picture(nullable:true, maxSize: 4194304 /* 4MB */)
 		surgery(blank:false)
     }
 	

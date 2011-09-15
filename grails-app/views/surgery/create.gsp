@@ -54,6 +54,7 @@
                                     <label for="recommendation"><g:message code="surgery.recommendation.label" default="Recommendation" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: surgeryInstance, field: 'recommendation', 'errors')}">
+                                //TEXTAREA
                                     <g:textField name="recommendation" value="${surgeryInstance?.recommendation}" />
                                 </td>
                             </tr>

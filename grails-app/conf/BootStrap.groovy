@@ -17,6 +17,41 @@ class BootStrap {
     def init = { servletContext ->
 		// Check whether the test data already exists.
 		if (!Client.count()) {
+			createClients()
+		}
+		
+    	/* bootstrap roles */
+    	def userRole = SecRole.findByAuthority('ROLE_USER') ?: new SecRole(authority: 'ROLE_USER').save(failOnError: true)
+        def adminRole = SecRole.findByAuthority('ROLE_ADMIN') ?: new SecRole(authority: 'ROLE_ADMIN').save(failOnError: true)
+		
+		/* bootstrap admin */
+        def adminUser = SecUser.findByUsername('admin') ?: new SecUser(
+                username: 'admin',
+                password: springSecurityService.encodePassword('admin'),
+                enabled: true).save(failOnError: true)
+
+        if (!adminUser.authorities.contains(adminRole)) {
+            SecUserSecRole.create adminUser, adminRole
+        }
+    }
+    def destroy = {
+    }
+	
+	def createAddresses = {
+//			def address = new Address(city: "Poznan", street : "ulica", postalCode : "61-100").save(failOnError: true)
+			def filePath = "resources/adresy.csv"
+			def text = ApplicationHolder.application.parentContext.getResource("classpath:$filePath").inputStream.text
+			text.eachCsvLine {
+				tokens ->
+				println "tokens: "+tokens + " size: "+tokens.size()
+				new Address( city: tokens[1]!="" ? tokens[1] : "Poznan", 
+							street : tokens[2]!="" ? tokens[2] : "ulica", 
+							postalCode : tokens[3]!="" ? tokens[3] : "61-100")
+				.save(failOnError: true)
+			}
+	}
+	
+	def createClients = {
 			def address = new Address(city: "Poznan", street : "ulica", postalCode : "61-100").save(failOnError: true)
 //			new Client(
 //				firstName: "Stephen King", 
@@ -57,23 +92,5 @@ class BootStrap {
 						 address: address
 			          ).save(failOnError: true)
 			}
-
-		}
-		
-    	/* bootstrap roles */
-    	def userRole = SecRole.findByAuthority('ROLE_USER') ?: new SecRole(authority: 'ROLE_USER').save(failOnError: true)
-        def adminRole = SecRole.findByAuthority('ROLE_ADMIN') ?: new SecRole(authority: 'ROLE_ADMIN').save(failOnError: true)
-		
-		/* bootstrap admin */
-        def adminUser = SecUser.findByUsername('admin') ?: new SecUser(
-                username: 'admin',
-                password: springSecurityService.encodePassword('admin'),
-                enabled: true).save(failOnError: true)
-
-        if (!adminUser.authorities.contains(adminRole)) {
-            SecUserSecRole.create adminUser, adminRole
-        }
-    }
-    def destroy = {
-    }
+	}
 }

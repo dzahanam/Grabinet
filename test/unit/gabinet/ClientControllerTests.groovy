@@ -11,7 +11,17 @@ class ClientControllerTests extends ControllerUnitTestCase {
         super.tearDown()
     }
 
-    void testSomething() {
-
+    void testIndex() {
+        def controller = new ClientController()
+        controller.index()
+        assertEquals "/gabinet/list", controller.response.redirectedUrl
     }
+	
+//    void testSomeRender() {
+//		controller.params.max = 10
+//		controller.show()
+//		assertEquals "", controller.response.contentAsString
+//    }
+	
+
 }
