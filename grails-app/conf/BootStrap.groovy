@@ -13,10 +13,13 @@ import org.gabinet.SecUserSecRole
 
 class BootStrap {
 	def springSecurityService
+	def addressesList = [:]
+
 
     def init = { servletContext ->
 		// Check whether the test data already exists.
 		if (!Client.count()) {
+			createAddresses()
 			createClients()
 		}
 		
@@ -43,16 +46,22 @@ class BootStrap {
 			def text = ApplicationHolder.application.parentContext.getResource("classpath:$filePath").inputStream.text
 			text.eachCsvLine {
 				tokens ->
-				println "tokens: "+tokens + " size: "+tokens.size()
-				new Address( city: tokens[1]!="" ? tokens[1] : "Poznan", 
-							street : tokens[2]!="" ? tokens[2] : "ulica", 
-							postalCode : tokens[3]!="" ? tokens[3] : "61-100")
-				.save(failOnError: true)
+//				println "tokens: "+tokens + " size: "+tokens.size()
+				def address = new Address( city: tokens[3]!="" ? tokens[3] : "Poznan",
+					street : tokens[2]!="" ? tokens[2] : "ulica",
+					postalCode : tokens[1]!="" ? tokens[1] : "61-100")
+				addressesList.put(tokens[0],address)
+				assert addressesList.get(tokens[0]) == address 
 			}
-	}
+//			println "addressesList: "+addressesList.size()
+//			println "1661: "+addressesList.get('1661')
+	} 
+//	def getAddressById = {
+//		new Address(city: "Poznan", street : "ulica", postalCode : "61-100").save(failOnError: true)
+//	}
 	
 	def createClients = {
-			def address = new Address(city: "Poznan", street : "ulica", postalCode : "61-100").save(failOnError: true)
+//			def address = new Address(city: "Poznan", street : "ulica", postalCode : "61-100").save(failOnError: true)
 //			new Client(
 //				firstName: "Stephen King", 
 //				surName: "The Shining", 
@@ -78,6 +87,14 @@ class BootStrap {
 						date = format.parse(tokens[7])					
 					} catch (ParseException e) {
 					}
+					
+				def addressId = tokens[11]
+				println "addressesList "+tokens[11]+" : "+addressesList.get(tokens[11])
+				def address = new Address(city: "Poznan", street : "DU", postalCode : "DU")
+				if (addressesList.get(tokens[11]) != null)
+					address = addressesList.get(tokens[11])
+				address.save(failOnError: true)
+
 				new Client(firstName: tokens[1]!="" ? tokens[1] : "DU",
 			             email: "",
 						 surName: tokens[2]!="" ? tokens[2] : "DU",
