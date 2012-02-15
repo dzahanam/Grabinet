@@ -113,8 +113,7 @@
                             <td valign="top" style="text-align: left;" class="value">
                                 <ul>
                                 <g:each in="${clientInstance.surgeies}" var="s">
-                                //data bez godziny
-                                    <li><g:link controller="surgery" action="show" id="${s.id}"><g:formatDate format="yyyy-MM-dd" date="${s.date}"/>,${s.surgery}, ${s?.encodeAsHTML()}</g:link></li>
+                                    <li><g:link controller="surgery" action="show" id="${s.id}"><g:formatDate format="yyyy-MM-dd" date="${s.date}"/>,${s.surgery}, ${s.recommendation}</g:link></li>
                                 </g:each>
                                 </ul>
                             </td>

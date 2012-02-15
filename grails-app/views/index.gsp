@@ -62,6 +62,7 @@
 	                    </g:each>
 	                    --%>
 	                    <li class="controller"><g:link controller="client" action="list">Client List</g:link></li>
+	                    <br/>
 	                    <li class="controller"><g:link controller="client" action="list">Surgery List</g:link></li>
 	                </ul>
                     <%--<ul>
