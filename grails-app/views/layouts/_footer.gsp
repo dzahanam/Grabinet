@@ -1,3 +1,3 @@
 <div id="footer">
 <hr />
-&copy; 2011</div>
+&copy; dzahanam@2012.pl</div>

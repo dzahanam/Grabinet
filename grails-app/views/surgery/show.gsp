@@ -22,21 +22,21 @@
                 <table>
                     <tbody>
                     
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="surgery.id.label" default="Id" /></td>
+                        <tr class="prop odd header">
+                            <td valign="top" class="name"><g:message code="client.label" default="Client" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: surgeryInstance, field: "id")}</td>
+                            <td valign="top" class="value"><g:link controller="client" action="show" id="${surgeryInstance.client.id}">${fieldValue(bean: surgeryInstance.client, field: "firstName")}	${fieldValue(bean: surgeryInstance.client, field: "surName")}</g:link></td>
                             
                         </tr>
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="surgery.date.label" default="Date" /></td>
                             
-                            <td valign="top" class="value"><g:formatDate date="${surgeryInstance?.date}" /></td>
+                            <td valign="top" class="value"><g:formatDate format="yyyy-MM-dd" date="${surgeryInstance?.date}" /></td>
                             
                         </tr>
                     
-                        <tr class="prop">
+                        <tr class="prop odd">
                             <td valign="top" class="name"><g:message code="surgery.recommendation.label" default="Recommendation" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: surgeryInstance, field: "recommendation")}</td>
@@ -50,7 +50,7 @@
                             
                         </tr>
                     
-                        <tr class="prop">
+                        <tr class="prop odd">
                             <td valign="top" class="name"><g:message code="surgery.surgery.label" default="Surgery" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: surgeryInstance, field: "surgery")}</td>
@@ -64,12 +64,18 @@
                             
                         </tr>
                         
-                        <tr class="prop">
+                        <g:if test="${surgeryInstance.picture != null}">
+                        <tr class="prop odd">
                             <td valign="top" class="name"><g:message code="surgery.picture.label" default="Picture" /></td>
                             
-                            <td valign="top" class="value"><img class="pic_small" src="${createLink(controller:'surgery', action:'viewImage', id:surgeryInstance.id)}" /></td>
+                            <td valign="top" class="value">
+    	                        	<img class="pic_small" src="${createLink(controller:'surgery', action:'viewImage', id:surgeryInstance.id)}" />
+	                            	<g:actionSubmit class="delete" action="deletePicture" value="Delete Picture" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+
+                            </td>
                             
                         </tr>
+						</g:if>
                     
                     </tbody>
                 </table>

@@ -29,9 +29,9 @@
                     <thead>
                         <tr>
                         
-                            <g:sortableColumn property="id" title="${message(code: 'client.id.label', default: 'Id')}" />
+                            <%--<g:sortableColumn property="id" title="${message(code: 'client.id.label', default: 'Id')}" />
                             
-                            <g:sortableColumn property="firstName" title="${message(code: 'client.firstName.label', default: 'Name')}" />
+                            --%><g:sortableColumn property="firstName" title="${message(code: 'client.firstName.label', default: 'Name')}" />
                         
                             <th><g:message code="client.address.label" default="Address" /></th>
                         
@@ -53,9 +53,9 @@
                     <g:each in="${clientInstanceList}" status="i" var="clientInstance">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                         
-                            <td><g:link action="show" id="${clientInstance.id}">${fieldValue(bean: clientInstance, field: "id")}</g:link></td>
+                            <%--<td><g:link action="show" id="${clientInstance.id}">${fieldValue(bean: clientInstance, field: "id")}</g:link></td>
                             
-                            <td><g:link action="show" id="${clientInstance.id}">${fieldValue(bean: clientInstance, field: "firstName")} ${fieldValue(bean: clientInstance, field: "surName")}</g:link></td>
+                            --%><td><g:link action="show" id="${clientInstance.id}">${fieldValue(bean: clientInstance, field: "firstName")} ${fieldValue(bean: clientInstance, field: "surName")}</g:link></td>
                         
                             <td>${fieldValue(bean: clientInstance, field: "address.city")}, ${fieldValue(bean: clientInstance, field: "address.postalCode")}, ${fieldValue(bean: clientInstance, field: "address.street")}</td>
                         

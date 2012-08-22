@@ -4,7 +4,7 @@ import grails.plugins.springsecurity.Secured
 
 import org.apache.commons.logging.LogFactory
 
-@Secured(['IS_AUTHENTICATED_FULLY'])
+//@Secured(['IS_AUTHENTICATED_FULLY'])
 class SurgeryController {
 	private static final log = LogFactory.getLog(this)
 	
@@ -16,6 +16,9 @@ class SurgeryController {
 
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
+		println "params.sort: "+params.sort
+		if (params.sort == null)
+		  params.sort = "date"
         [surgeryInstanceList: Surgery.list(params), surgeryInstanceTotal: Surgery.count()]
     }
 
@@ -25,20 +28,16 @@ class SurgeryController {
     }
 
     def save = {
-//		def testDatePicker = {}
 		def clientInstance = Client.get(params.id)
-		log.error clientInstance
         def surgeryInstance = new Surgery(params)
-		log.error surgeryInstance
 		clientInstance.addToSurgeies(surgeryInstance)
 		
 		def f = request.getFile('picture')
 	    // List of OK mime-types
 	    def okcontents = ['image/png', 'image/jpeg', 'image/gif']
-	    if (! okcontents.contains(f.getContentType())) {
-	      flash.message = "picture must be one of: ${okcontents}"
-	      render(view: "create", model: [surgeryInstance: surgeryInstance])
-	      return;
+	    if ((f != null) && ! okcontents.contains(f.getContentType())) {
+	      log.error "picture must be one of: ${okcontents}"
+		  surgeryInstance.picture = null
 	    }
 		log.info("File uploaded: " + f.getContentType())
 		
@@ -58,6 +57,7 @@ class SurgeryController {
             redirect(action: "list")
         }
         else {
+			println surgeryInstance.client
             [surgeryInstance: surgeryInstance]
         }
     }
@@ -86,6 +86,16 @@ class SurgeryController {
                 }
             }
             surgeryInstance.properties = params
+			
+			def f = request.getFile('picture')
+		    // List of OK mime-types
+		    def okcontents = ['image/png', 'image/jpeg', 'image/gif']
+		    if ((f != null) && ! okcontents.contains(f.getContentType())) {
+		      log.error "picture must be one of: ${okcontents}"
+			  surgeryInstance.picture = null
+		    }
+			log.info("File uploaded: " + f.getContentType())
+			
             if (!surgeryInstance.hasErrors() && surgeryInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'surgery.label', default: 'Surgery'), surgeryInstance.id])}"
                 redirect(action: "show", id: surgeryInstance.id)
@@ -118,12 +128,24 @@ class SurgeryController {
             redirect(action: "list")
         }
     }
-	
+
     def viewImage = {
 
       def surgeryInstance = Surgery.get(params.id)
       byte[] image = surgeryInstance.picture 
       response.outputStream << image
 
-    } 
+    }
+	
+	def deletePicture = {
+      def surgeryInstance = Surgery.get(params.id)
+      surgeryInstance.picture = null
+	  if (!surgeryInstance.hasErrors() && surgeryInstance.save(flush: true)) {
+          flash.message = "${message(code: 'default.updated.message', args: [message(code: 'surgery.label', default: 'Surgery'), surgeryInstance.id])}"
+          redirect(action: "show", id: surgeryInstance.id)
+      } else {
+          render(view: "edit", model: [surgeryInstance: surgeryInstance])
+      }
+	  render(view: "edit", model: [surgeryInstance: surgeryInstance])
+	}
 }

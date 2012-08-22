@@ -38,7 +38,7 @@ ul {
 }
 
 input,select,textarea {
-	background-color: #fcfcfc;
+	background-color: rgb(220, 252, 220);
 	border: 1px solid #ccc;
 	font: 11px verdana, arial, helvetica, sans-serif;
 	margin: 2px 0;

@@ -10,6 +10,8 @@ class ClientController {
 
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
+		if (params.sort == null)
+		  params.sort = "surName"
         [clientInstanceList: Client.list(params), clientInstanceTotal: Client.count()]
     }
 

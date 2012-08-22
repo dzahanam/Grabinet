@@ -21,10 +21,7 @@
                 <table>
                     <thead>
                         <tr>
-                        
-                            <g:sortableColumn property="id" title="${message(code: 'surgery.id.label', default: 'Id')}" />
-                        
-                            <g:sortableColumn property="date" title="${message(code: 'surgery.date.label', default: 'Date')}" />
+							<g:sortableColumn property="date" title="${message(code: 'surgery.date.label', default: 'Date')}" />
                         
                             <g:sortableColumn property="recommendation" title="${message(code: 'surgery.recommendation.label', default: 'Recommendation')}" />
                         
@@ -40,15 +37,13 @@
                     <g:each in="${surgeryInstanceList}" status="i" var="surgeryInstance">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                         
-                            <td><g:link action="show" id="${surgeryInstance.id}">${fieldValue(bean: surgeryInstance, field: "id")}</g:link></td>
-                        
-                            <td><g:formatDate date="${surgeryInstance.date}" /></td>
+                            <td><g:formatDate format="yyyy-MM-dd" date="${surgeryInstance.date}" /></td>
                         
                             <td>${fieldValue(bean: surgeryInstance, field: "recommendation")}</td>
                         
                             <td>${fieldValue(bean: surgeryInstance, field: "skin")}</td>
                         
-                            <td>${fieldValue(bean: surgeryInstance, field: "surgery")}</td>
+                            <td><g:link action="show" id="${surgeryInstance.id}">${fieldValue(bean: surgeryInstance, field: "surgery")}</g:link></td>
                         
                             <td>${fieldValue(bean: surgeryInstance, field: "therapy")}</td>
                         

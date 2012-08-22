@@ -21,9 +21,11 @@ class Surgery {
 	byte[] picture
 	
     static constraints = {
-		picture(nullable:true, maxSize: 4194304 /* 4MB */)
+		picture(nullable:true, maxSize: 12582912 /* 12MB */)
 		surgery(blank:false)
     }
 	
 	static searchable = true
+	
+	static belongsTo = [client:Client]
 }

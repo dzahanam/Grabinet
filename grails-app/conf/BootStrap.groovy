@@ -2,6 +2,7 @@ import java.text.ParseException
 
 import gabinet.Address
 import gabinet.Client
+import gabinet.Surgery
 import java.text.SimpleDateFormat
 
 import org.codehaus.groovy.grails.commons.ApplicationHolder
@@ -14,11 +15,13 @@ import org.gabinet.SecUserSecRole
 class BootStrap {
 	def springSecurityService
 	def addressesList = [:]
+	def surgeriesList = [:]
 
 
     def init = { servletContext ->
 		// Check whether the test data already exists.
 		if (!Client.count()) {
+			createSurgeries()
 			createAddresses()
 			createClients()
 		}
@@ -41,24 +44,50 @@ class BootStrap {
     }
 	
 	def createAddresses = {
-//			def address = new Address(city: "Poznan", street : "ulica", postalCode : "61-100").save(failOnError: true)
 			def filePath = "resources/adresy.csv"
 			def text = ApplicationHolder.application.parentContext.getResource("classpath:$filePath").inputStream.text
 			text.eachCsvLine {
 				tokens ->
-//				println "tokens: "+tokens + " size: "+tokens.size()
 				def address = new Address( city: tokens[3]!="" ? tokens[3] : "Poznan",
 					street : tokens[2]!="" ? tokens[2] : "ulica",
 					postalCode : tokens[1]!="" ? tokens[1] : "61-100")
 				addressesList.put(tokens[0],address)
-				assert addressesList.get(tokens[0]) == address 
+				//assert addressesList.get(tokens[0]) == address 
 			}
-//			println "addressesList: "+addressesList.size()
-//			println "1661: "+addressesList.get('1661')
 	} 
-//	def getAddressById = {
-//		new Address(city: "Poznan", street : "ulica", postalCode : "61-100").save(failOnError: true)
-//	}
+	
+	def createSurgeries = {
+			def filePath = "resources/zabiegi.csv"
+			def text = ApplicationHolder.application.parentContext.getResource("classpath:$filePath").inputStream.text
+			text.eachCsvLine {
+				//"IDzabiegu","Data","TerapiaDot","CeraOpis","Zalecenia","Zabieg","IDklienta"
+				tokens ->
+				println "tokens: "+tokens + " size: "+tokens.size()
+				SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd")
+				Date date = new Date()
+				if (tokens[1]!="")
+					try {
+						date = format.parse(tokens[1])					
+					} catch (ParseException e) {
+					}
+				def surgery = new Surgery( date: date,
+					therapy : tokens[2]!="" ? tokens[2] : "DU",
+					skin : tokens[3]!="" ? tokens[3] : "DU",
+					recommendation : tokens[4]!="" ? tokens[4] : "DU",
+					surgery : tokens[5]!="" ? tokens[5] : "DU")
+				def last = tokens.size()-1
+				def tmp = 0
+				def surgeryTmp = surgeriesList.get(tokens[last]+"."+tmp)
+				while (surgeryTmp instanceof Surgery && surgeryTmp != null) {
+				   tmp++
+				   surgeryTmp = surgeriesList.get(tokens[last]+"."+tmp)
+				   println "surgeriesList.get: "+tokens[last]+"."+tmp+" surgeryTmp: "+surgeryTmp
+				}
+				surgeriesList.put(tokens[last]+"."+tmp,surgery)
+				println "surgeriesList.put: "+tokens[last]+"."+tmp+" surgery: "+surgery
+//				assert surgeriesList.get(tokens[last]) == surgery 
+			}
+	} 
 	
 	def createClients = {
 //			def address = new Address(city: "Poznan", street : "ulica", postalCode : "61-100").save(failOnError: true)
@@ -79,7 +108,7 @@ class BootStrap {
 			def text = ApplicationHolder.application.parentContext.getResource("classpath:$filePath").inputStream.text
 			text.eachCsvLine {
 				tokens ->
-				println "tokens: "+tokens + " size: "+tokens.size()
+//				println "tokens: "+tokens + " size: "+tokens.size()
 				SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd")
 				Date date = new Date()
 				if (tokens[7]!="")
@@ -89,13 +118,13 @@ class BootStrap {
 					}
 					
 				def addressId = tokens[11]
-				println "addressesList "+tokens[11]+" : "+addressesList.get(tokens[11])
+//				println "addressesList "+tokens[11]+" : "+addressesList.get(tokens[11])
 				def address = new Address(city: "Poznan", street : "DU", postalCode : "DU")
 				if (addressesList.get(tokens[11]) != null)
 					address = addressesList.get(tokens[11])
 				address.save(failOnError: true)
 
-				new Client(firstName: tokens[1]!="" ? tokens[1] : "DU",
+				def clientInstance = new Client(firstName: tokens[1]!="" ? tokens[1] : "DU",
 			             email: "",
 						 surName: tokens[2]!="" ? tokens[2] : "DU",
 						 homePhone: tokens[3],
@@ -108,6 +137,17 @@ class BootStrap {
 						 comment: tokens[10],
 						 address: address
 			          ).save(failOnError: true)
+				
+			    //odbieranie listy
+ 	            def tmp2 = 0
+				def surgery = surgeriesList.get(tokens[0]+"."+tmp2)
+					println "surgeriesList "+tokens[0]+" : "+surgeriesList.get(tokens[0]+"."+tmp2)+" : "+surgery
+					while (surgery instanceof Surgery && surgery != null) {
+						println "tmp2: "+tmp2+" list: "+surgeriesList.get(tokens[0]+"."+tmp2)
+						clientInstance.addToSurgeies(surgery)
+						tmp2++
+						surgery = surgeriesList.get(tokens[0]+"."+tmp2)
+					}
 			}
 	}
 }

@@ -21,7 +21,7 @@
             </g:if>
             <div class="dialog">
                 <table>
-                    <tbody>
+                    <tbody><%--
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="client.id.label" default="Id" /></td>
@@ -30,14 +30,14 @@
                             
                         </tr>
                         
-                        <tr class="prop">
+                        --%><tr class="prop">
                             <td valign="top" class="name"><g:message code="client.firstName.label" default="First Name" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: clientInstance, field: "firstName")}</td>
                             
                         </tr>
                         
-                        <tr class="prop">
+                        <tr class="prop odd">
                             <td valign="top" class="name"><g:message code="client.surName.label" default="Sur Name" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: clientInstance, field: "surName")}</td>
@@ -51,7 +51,7 @@
                             
                         </tr>
                     
-                        <tr class="prop">
+                        <tr class="prop odd">
                             <td valign="top" class="name"><g:message code="client.allergy.label" default="Allergy" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: clientInstance, field: "allergy")}</td>
@@ -65,7 +65,7 @@
                             
                         </tr>
                     
-                        <tr class="prop">
+                        <tr class="prop odd">
                             <td valign="top" class="name"><g:message code="client.cellPhone.label" default="Cell Phone" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: clientInstance, field: "cellPhone")}</td>
@@ -79,7 +79,7 @@
                             
                         </tr>
                         
-                        <tr class="prop">
+                        <tr class="prop odd">
                             <td valign="top" class="name"><g:message code="client.workPhone.label" default="Work Phone" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: clientInstance, field: "workPhone")}</td>
@@ -93,7 +93,7 @@
                             
                         </tr>
                     
-                        <tr class="prop">
+                        <tr class="prop odd">
                             <td valign="top" class="name"><g:message code="client.family.label" default="Family" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: clientInstance, field: "family")}</td>
@@ -107,7 +107,7 @@
                             
                         </tr>
                     
-                        <tr class="prop">
+                        <tr class="prop odd">
                             <td valign="top" class="name"><g:message code="client.surgeies.label" default="Surgeies" /></td>
                             
                             <td valign="top" style="text-align: left;" class="value">

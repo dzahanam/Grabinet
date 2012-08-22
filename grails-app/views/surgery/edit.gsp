@@ -75,6 +75,29 @@
                                     <g:textField name="therapy" value="${surgeryInstance?.therapy}" />
                                 </td>
                             </tr>
+                            
+                        <g:if test="${surgeryInstance.picture != null}">
+	                        <tr class="prop">
+	                            <td valign="top" class="name"><g:message code="surgery.picture.label" default="Picture" /></td>
+	                            
+	                            <td valign="top" class="value">
+	    	                        	<img class="pic_small" src="${createLink(controller:'surgery', action:'viewImage', id:surgeryInstance.id)}" />
+		                            	<g:actionSubmit class="delete" action="deletePicture" value="Delete Picture" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+	
+	                            </td>
+	                            
+	                        </tr>
+						</g:if>
+						<g:if test="${surgeryInstance.picture == null}">
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="picture"><g:message code="surgery.upload.label" default="Upload picture" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: surgeryInstance, field: 'picture', 'errors')}">
+                                    <input type="file" name="picture" />
+                                </td>
+                            </tr>
+                        </g:if>
                         
                         </tbody>
                     </table>
